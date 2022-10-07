@@ -2,9 +2,24 @@
 .vs
 bin
 obj
+Packages
 *.bin
 *.avi
+*.dll
 *.exe
 *.exe.settings
-*.blend
-*.pyc
+
+# State recovery files
+~*
+
+# Bonsai scripting and environment files
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv
+winpython
