@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.6.3"
+<WorkflowBuilder Version="2.7.0"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:harp="clr-namespace:Bonsai.Harp;assembly=Bonsai.Harp"
-                 xmlns:scr="clr-namespace:Bonsai.Scripting;assembly=Bonsai.Scripting"
+                 xmlns:ipy="clr-namespace:Bonsai.Scripting.IronPython;assembly=Bonsai.Scripting.IronPython"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                 xmlns:p1="clr-namespace:Bonsai.AlliedVision;assembly=Bonsai.AlliedVision"
                  xmlns:dsp="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp"
                  xmlns:mx="clr-namespace:Bonsai.DAQmx;assembly=Bonsai.DAQmx"
-                 xmlns:p2="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
+                 xmlns:avt="clr-namespace:Bonsai.Vimba;assembly=Bonsai.Vimba"
+                 xmlns:p1="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
+                 xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -32,7 +33,7 @@
                 </Combinator>
               </Expression>
               <Expression xsi:type="rx:Accumulate" />
-              <Expression xsi:type="Condition">
+              <Expression xsi:type="rx:Condition">
                 <Workflow>
                   <Nodes>
                     <Expression xsi:type="WorkflowInput">
@@ -99,8 +100,8 @@
         <Name>Treadmill</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="BehaviorSubject" TypeArguments="harp:HarpMessage">
-              <Name>TreadmillCommands</Name>
+            <Expression xsi:type="rx:BehaviorSubject" TypeArguments="harp:HarpMessage">
+              <rx:Name>TreadmillCommands</rx:Name>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="PortName" />
@@ -116,7 +117,7 @@
                 <harp:PortName>COM4</harp:PortName>
               </Combinator>
             </Expression>
-            <Expression xsi:type="PublishSubject">
+            <Expression xsi:type="rx:PublishSubject">
               <Name>TreadmillEvents</Name>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -139,7 +140,7 @@
                 <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
               </Combinator>
             </Expression>
-            <Expression xsi:type="SelectMany">
+            <Expression xsi:type="rx:SelectMany">
               <Name>SetLimits</Name>
               <Workflow>
                 <Nodes>
@@ -162,13 +163,13 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="rx:Zip" />
                   </Expression>
-                  <Expression xsi:type="scr:PythonTransform">
-                    <scr:Script>clr.AddReference("Bonsai.Harp")
+                  <Expression xsi:type="ipy:PythonTransform">
+                    <ipy:Script>clr.AddReference("Bonsai.Harp")
 from Bonsai.Harp import *
 
 @returns(HarpMessage)
 def process(value):
-  return HarpMessage.FromInt16(41, MessageType.Write, value.Item1, value.Item2)</scr:Script>
+  return HarpMessage.FromInt16(41, MessageType.Write, value.Item1, value.Item2)</ipy:Script>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>TreadmillCommands</Name>
@@ -192,7 +193,7 @@ def process(value):
                 <wie:SuppressRepetitions>true</wie:SuppressRepetitions>
               </Combinator>
             </Expression>
-            <Expression xsi:type="SelectMany">
+            <Expression xsi:type="rx:SelectMany">
               <Name>TiltOff</Name>
               <Workflow>
                 <Nodes>
@@ -282,7 +283,7 @@ def process(value):
                 <rx:Count>1</rx:Count>
               </Combinator>
             </Expression>
-            <Expression xsi:type="SelectMany">
+            <Expression xsi:type="rx:SelectMany">
               <Name>EnableMotors</Name>
               <Workflow>
                 <Nodes>
@@ -418,7 +419,7 @@ def process(value):
           <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
         </Combinator>
       </Expression>
-      <Expression xsi:type="PublishSubject">
+      <Expression xsi:type="rx:PublishSubject">
         <Name>Start</Name>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
@@ -537,7 +538,7 @@ def process(value):
                       <Value>PT30S</Value>
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="BehaviorSubject">
+                  <Expression xsi:type="rx:BehaviorSubject">
                     <Name>TrialDuration</Name>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
@@ -547,7 +548,7 @@ def process(value):
                     <MemberName>FrameRate</MemberName>
                     <Value>370</Value>
                   </Expression>
-                  <Expression xsi:type="BehaviorSubject">
+                  <Expression xsi:type="rx:BehaviorSubject">
                     <Name>FrameRate</Name>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
@@ -555,10 +556,10 @@ def process(value):
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="StringProperty">
-                      <Value>C:\Users\Amurr\Desktop\data</Value>
+                      <Value>C:\Users\Amurr\Dropbox (UCL)\Marta Data Files\TM\grid-measure</Value>
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="BehaviorSubject">
+                  <Expression xsi:type="rx:BehaviorSubject">
                     <Name>Path</Name>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
@@ -566,10 +567,10 @@ def process(value):
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="StringProperty">
-                      <Value>Session1</Value>
+                      <Value />
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="BehaviorSubject">
+                  <Expression xsi:type="rx:BehaviorSubject">
                     <Name>Session</Name>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
@@ -577,10 +578,10 @@ def process(value):
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="StringProperty">
-                      <Value>0.26ms</Value>
+                      <Value />
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="BehaviorSubject">
+                  <Expression xsi:type="rx:BehaviorSubject">
                     <Name>Speed</Name>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
@@ -588,10 +589,10 @@ def process(value):
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="StringProperty">
-                      <Value>F</Value>
+                      <Value />
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="BehaviorSubject">
+                  <Expression xsi:type="rx:BehaviorSubject">
                     <Name>Sex</Name>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
@@ -599,10 +600,10 @@ def process(value):
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="StringProperty">
-                      <Value>AAA-1110891</Value>
+                      <Value />
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="BehaviorSubject">
+                  <Expression xsi:type="rx:BehaviorSubject">
                     <Name>Animal</Name>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
@@ -610,10 +611,10 @@ def process(value):
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="StringProperty">
-                      <Value>_test3</Value>
+                      <Value>grid-measure</Value>
                     </Combinator>
                   </Expression>
-                  <Expression xsi:type="BehaviorSubject">
+                  <Expression xsi:type="rx:BehaviorSubject">
                     <Name>Trial</Name>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -623,9 +624,9 @@ def process(value):
                     <Format>{0}/{1}_{2}_{3}_{4}_{5}</Format>
                     <Selector>Item1,Item2,Item3,Item4,Item5,Item6</Selector>
                   </Expression>
-                  <Expression xsi:type="ReplaySubject">
+                  <Expression xsi:type="rx:ReplaySubject">
                     <Name>PathName</Name>
-                    <BufferSize xsi:nil="true" />
+                    <rx:BufferSize xsi:nil="true" />
                   </Expression>
                 </Nodes>
                 <Edges>
@@ -657,19 +658,12 @@ def process(value):
               </Workflow>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="p1:VimbaCapture">
-                <p1:Index>0</p1:Index>
-                <p1:ExposureTime>0</p1:ExposureTime>
-                <p1:FrameRate>370</p1:FrameRate>
-                <p1:BlackLevel>0</p1:BlackLevel>
-                <p1:Gain>0</p1:Gain>
-                <p1:Gamma>0</p1:Gamma>
-                <p1:UseMaxFrameRate>false</p1:UseMaxFrameRate>
-                <p1:ResetDevice>false</p1:ResetDevice>
-                <p1:FrameCount>30</p1:FrameCount>
+              <Combinator xsi:type="avt:VimbaCapture">
+                <avt:Index xsi:nil="true" />
+                <avt:FrameCount xsi:nil="true" />
               </Combinator>
             </Expression>
-            <Expression xsi:type="PublishSubject">
+            <Expression xsi:type="rx:PublishSubject">
               <Name>VideoStream</Name>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
@@ -678,7 +672,7 @@ def process(value):
             <Expression xsi:type="SubscribeSubject">
               <Name>Start</Name>
             </Expression>
-            <Expression xsi:type="SelectMany">
+            <Expression xsi:type="rx:SelectMany">
               <Name>RecordData</Name>
               <Workflow>
                 <Nodes>
@@ -702,7 +696,7 @@ def process(value):
                       <Value>1600</Value>
                     </Operand>
                   </Expression>
-                  <Expression xsi:type="BehaviorSubject">
+                  <Expression xsi:type="rx:BehaviorSubject">
                     <Name>DataRecordingBufferSize</Name>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
@@ -718,7 +712,7 @@ def process(value):
                       <Value>1600</Value>
                     </Operand>
                   </Expression>
-                  <Expression xsi:type="BehaviorSubject">
+                  <Expression xsi:type="rx:BehaviorSubject">
                     <Name>TotalRecordingBufferSize</Name>
                   </Expression>
                   <Expression xsi:type="SubscribeSubject">
@@ -778,7 +772,7 @@ def process(value):
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
                     <io:IncludeHeader>true</io:IncludeHeader>
-                    <io:Selector>VimbaTimestamp,FrameID</io:Selector>
+                    <io:Selector>FrameID,Timestamp</io:Selector>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
                     <Selector>Image</Selector>
@@ -1040,7 +1034,7 @@ def process(value):
                 </mx:Channels>
               </Combinator>
             </Expression>
-            <Expression xsi:type="PublishSubject">
+            <Expression xsi:type="rx:PublishSubject">
               <Name>InputData</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
@@ -1099,7 +1093,7 @@ def process(value):
       <Expression xsi:type="SubscribeSubject">
         <Name>Start</Name>
       </Expression>
-      <Expression xsi:type="SelectMany">
+      <Expression xsi:type="rx:SelectMany">
         <Name>TaskLogic</Name>
         <Workflow>
           <Nodes>
@@ -1109,7 +1103,7 @@ def process(value):
                 <rx:Period>PT0S</rx:Period>
               </Combinator>
             </Expression>
-            <Expression xsi:type="SelectMany">
+            <Expression xsi:type="rx:SelectMany">
               <Name>InitialState</Name>
               <Workflow>
                 <Nodes>
@@ -1203,7 +1197,7 @@ def process(value):
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="SelectMany">
+            <Expression xsi:type="rx:SelectMany">
               <Name>SubTrial</Name>
               <Workflow>
                 <Nodes>
@@ -1220,7 +1214,7 @@ def process(value):
                     <Property Name="Lower" Category="TimeBeforePerturb" />
                     <Property Name="Upper" Category="TimeBeforePerturb" />
                   </Expression>
-                  <Expression xsi:type="SelectMany">
+                  <Expression xsi:type="rx:SelectMany">
                     <Name>DelayRunning</Name>
                     <Workflow>
                       <Nodes>
@@ -1229,13 +1223,13 @@ def process(value):
                           <Property Name="Upper" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p2:CreateContinuousUniform">
-                            <p2:Lower>5</p2:Lower>
-                            <p2:Upper>10</p2:Upper>
+                          <Combinator xsi:type="p1:CreateContinuousUniform">
+                            <p1:Lower>5</p1:Lower>
+                            <p1:Upper>10</p1:Upper>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p2:Sample" />
+                          <Combinator xsi:type="p1:Sample" />
                         </Expression>
                         <Expression xsi:type="scr:ExpressionTransform">
                           <scr:Expression>TimeSpan.FromSeconds(it)</scr:Expression>
@@ -1274,7 +1268,7 @@ def process(value):
                     <Property Name="PerturbMax" Category="Perturb" />
                     <Property Name="PerturbMin" Category="Perturb" />
                   </Expression>
-                  <Expression xsi:type="SelectMany">
+                  <Expression xsi:type="rx:SelectMany">
                     <Name>Perturbation</Name>
                     <Workflow>
                       <Nodes>
@@ -1295,13 +1289,13 @@ def process(value):
                           <Name>TreadmillCommands</Name>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p2:CreateDiscreteUniform">
-                            <p2:Lower>0</p2:Lower>
-                            <p2:Upper>1</p2:Upper>
+                          <Combinator xsi:type="p1:CreateDiscreteUniform">
+                            <p1:Lower>0</p1:Lower>
+                            <p1:Upper>1</p1:Upper>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="p2:Sample" />
+                          <Combinator xsi:type="p1:Sample" />
                         </Expression>
                         <Expression xsi:type="ExternalizedMapping">
                           <Property Name="Value" DisplayName="PerturbMax" />
@@ -1374,7 +1368,7 @@ def process(value):
                   <Expression xsi:type="ExternalizedMapping">
                     <Property Name="Wait" Category="WaitAfterTilt" />
                   </Expression>
-                  <Expression xsi:type="SelectMany">
+                  <Expression xsi:type="rx:SelectMany">
                     <Name>WaitForTilt</Name>
                     <Workflow>
                       <Nodes>
@@ -1401,7 +1395,7 @@ def process(value):
                       </Edges>
                     </Workflow>
                   </Expression>
-                  <Expression xsi:type="SelectMany">
+                  <Expression xsi:type="rx:SelectMany">
                     <Name>Reset</Name>
                     <Workflow>
                       <Nodes>
@@ -1483,7 +1477,7 @@ def process(value):
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="SelectMany">
+            <Expression xsi:type="rx:SelectMany">
               <Name>BeltOff</Name>
               <Workflow>
                 <Nodes>
@@ -1533,7 +1527,7 @@ def process(value):
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:LastOrDefault" />
             </Expression>
-            <Expression xsi:type="SelectMany">
+            <Expression xsi:type="rx:SelectMany">
               <Name>ResetBeltPos</Name>
               <Workflow>
                 <Nodes>
