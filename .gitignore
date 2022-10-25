@@ -8,6 +8,8 @@ Packages
 *.dll
 *.exe
 *.exe.settings
+*.csv
+*.bin
 
 # State recovery files
 ~*
