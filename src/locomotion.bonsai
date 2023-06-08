@@ -723,7 +723,7 @@
                   </Expression>
                   <Expression xsi:type="PropertySource" TypeArguments="cv:VideoWriter,sys:Double">
                     <MemberName>FrameRate</MemberName>
-                    <Value>370</Value>
+                    <Value>450</Value>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
                     <Name>FrameRate</Name>
@@ -766,7 +766,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="StringProperty">
-                      <Value>Session1</Value>
+                      <Value>NoAnimal</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
@@ -799,7 +799,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="StringProperty">
-                      <Value>TestLargePert</Value>
+                      <Value>FAA-1035383</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:BehaviorSubject">
@@ -940,7 +940,7 @@ Item4 as Video)</scr:Expression>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:\Users\Amurr\Desktop\test/Session1_0.3_M_TestLargePert_1_VideoStream.csv</io:FileName>
+                    <io:FileName>C:\Users\Amurr\Desktop\test/NoAnimal_0.3_M_FAA-1035383_1_VideoStream.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>false</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -967,12 +967,12 @@ Item4 as Video)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="cv:VideoWriter">
-                      <cv:FileName>C:\Users\Amurr\Desktop\test/Session1_0.3_M_TestLargePert_1.avi</cv:FileName>
+                      <cv:FileName>C:\Users\Amurr\Desktop\test/NoAnimal_0.3_M_FAA-1035383_1.avi</cv:FileName>
                       <cv:Suffix>None</cv:Suffix>
                       <cv:Buffered>true</cv:Buffered>
                       <cv:Overwrite>false</cv:Overwrite>
                       <cv:FourCC>FMP4</cv:FourCC>
-                      <cv:FrameRate>370</cv:FrameRate>
+                      <cv:FrameRate>450</cv:FrameRate>
                       <cv:FrameSize>
                         <cv:Width>0</cv:Width>
                         <cv:Height>0</cv:Height>
@@ -1012,7 +1012,7 @@ Item4 as Video)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="dsp:MatrixWriter">
-                      <dsp:Path>C:\Users\Amurr\Desktop\test/Session1_0.3_M_TestLargePert_1_TreadmillEvents.bin</dsp:Path>
+                      <dsp:Path>C:\Users\Amurr\Desktop\test/NoAnimal_0.3_M_FAA-1035383_1_TreadmillEvents.bin</dsp:Path>
                       <dsp:Suffix>None</dsp:Suffix>
                       <dsp:Overwrite>false</dsp:Overwrite>
                       <dsp:Layout>ColumnMajor</dsp:Layout>
@@ -1046,7 +1046,7 @@ Item4 as Video)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="dsp:MatrixWriter">
-                      <dsp:Path>C:\Users\Amurr\Desktop\test/Session1_0.3_M_TestLargePert_1_BehaviorEvents.bin</dsp:Path>
+                      <dsp:Path>C:\Users\Amurr\Desktop\test/NoAnimal_0.3_M_FAA-1035383_1_BehaviorEvents.bin</dsp:Path>
                       <dsp:Suffix>None</dsp:Suffix>
                       <dsp:Overwrite>false</dsp:Overwrite>
                       <dsp:Layout>ColumnMajor</dsp:Layout>
@@ -1089,7 +1089,7 @@ Item4 as Video)</scr:Expression>
                     </PropertyMappings>
                   </Expression>
                   <Expression xsi:type="io:CsvWriter">
-                    <io:FileName>C:\Users\Amurr\Desktop\test/Session1_0.3_M_TestLargePert_1_TreadmillSpeed.csv</io:FileName>
+                    <io:FileName>C:\Users\Amurr\Desktop\test/NoAnimal_0.3_M_FAA-1035383_1_TreadmillSpeed.csv</io:FileName>
                     <io:Append>false</io:Append>
                     <io:Overwrite>true</io:Overwrite>
                     <io:Suffix>None</io:Suffix>
@@ -1335,7 +1335,7 @@ Item4 as Video)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="rx:Timer">
-                            <rx:DueTime>PT6.921S</rx:DueTime>
+                            <rx:DueTime>PT6.533S</rx:DueTime>
                             <rx:Period>PT0S</rx:Period>
                           </Combinator>
                         </Expression>
@@ -1371,7 +1371,7 @@ Item4 as Video)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="IntProperty">
-                            <Value>800</Value>
+                            <Value>0</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="harp:Format">
@@ -1396,7 +1396,7 @@ Item4 as Video)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="IntProperty">
-                            <Value>5000</Value>
+                            <Value>0</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="ExternalizedMapping">
@@ -1404,7 +1404,7 @@ Item4 as Video)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="IntProperty">
-                            <Value>-5500</Value>
+                            <Value>0</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -1420,7 +1420,7 @@ Item4 as Video)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="IntProperty">
-                            <Value>5000</Value>
+                            <Value>0</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="harp:Format">
@@ -1501,7 +1501,7 @@ Item4 as Video)</scr:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="IntProperty">
-                            <Value>50</Value>
+                            <Value>100</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="harp:Format">
@@ -1593,8 +1593,8 @@ Item4 as Video)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="harp:Format">
                     <harp:MessageType>Write</harp:MessageType>
-                    <harp:Address>33</harp:Address>
-                    <harp:PayloadType>S16</harp:PayloadType>
+                    <harp:Address>32</harp:Address>
+                    <harp:PayloadType>U8</harp:PayloadType>
                   </Expression>
                   <Expression xsi:type="MulticastSubject">
                     <Name>TreadmillCommands</Name>

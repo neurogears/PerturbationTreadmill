@@ -23,7 +23,7 @@
           <harp:VisualIndicators>On</harp:VisualIndicators>
           <harp:Heartbeat>Disable</harp:Heartbeat>
           <harp:IgnoreErrors>false</harp:IgnoreErrors>
-          <harp:PortName>COM4</harp:PortName>
+          <harp:PortName>COM7</harp:PortName>
         </Combinator>
       </Expression>
     </Nodes>
